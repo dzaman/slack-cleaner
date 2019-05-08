@@ -3,6 +3,7 @@
 from datetime import datetime
 import logging
 import pprint
+import re
 import sys
 import time
 
@@ -45,6 +46,12 @@ logger.info('Running slack-cleaner v' + __version__)
 
 # User dict
 user_dict = {}
+
+# compiled regex
+regex_match = None
+
+if args.match:
+    regex_match = re.compile(args.match)
 
 
 # Construct a local user dict for further usage
@@ -132,6 +139,10 @@ def delete_message_on_channel(channel_id, message):
             return m.get('username')
         else:
             return '_'
+
+    if args.match:
+        if not regex_match.match(message.get('text')):
+            return
 
     # Actually perform the task
     if args.perform:

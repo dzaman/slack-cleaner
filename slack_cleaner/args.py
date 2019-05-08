@@ -52,6 +52,9 @@ class Args():
         p.add_argument('--types',
                        help='Delete files of a certain type, e.g., posts,pdfs')
 
+        p.add_argument('--match',
+                       help='Only delete messages that match this regex')
+
         # Perform or not
         p.add_argument('--perform', action='store_true',
                        help='Perform the task')
@@ -82,5 +85,6 @@ class Args():
         self.start_time = args.after
         self.end_time = args.before
         self.types = args.types
+        self.match = args.match
 
         self.perform = args.perform
